@@ -13,7 +13,7 @@ import Transactions from './pages/Transactions';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
-    <body>
+    
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -22,6 +22,6 @@ root.render(
         <Route path="/transactions" element={<Transactions />} />
       </Routes>
       <Footer />
-    </body>
+    
   </BrowserRouter>
 );
