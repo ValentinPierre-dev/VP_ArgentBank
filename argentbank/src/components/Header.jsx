@@ -5,10 +5,10 @@ import { Link } from 'react-router-dom';
 // Assets
 import logo from "../assets/argentBankLogo.png";
 
-/*import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleUser } from '@fortawesome/free-solid-svg-icons'
 
-const element = <FontAwesomeIcon icon={faCircleUser} />*/
+const element = <FontAwesomeIcon icon={faCircleUser} />
 
 function Header() {
   return (
@@ -25,6 +25,7 @@ function Header() {
       </Link>
       <Link to="/signin" className='no-underline'>
         <div className="main-nav-item">
+          <div>{element}</div>
           <p>Sign In</p>
         </div>
       </Link>

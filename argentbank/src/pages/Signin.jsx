@@ -1,41 +1,92 @@
 // React
-import React from 'react';
-import { getToken } from '../utils/dataFetcher.js'
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
+// Redux
+import { useDispatch, useSelector } from 'react-redux';
+import { checkSignin } from '../redux/actions/actions';
 
-/*import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+// Components
+import Loader from '../components/Loader';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleUser } from '@fortawesome/free-solid-svg-icons'
 
-const element = <FontAwesomeIcon icon={faCircleUser} />*/
+const element = <FontAwesomeIcon icon={faCircleUser} />
 
 function Signin() {
 
-    getToken("tony@stark.com", "password123").then(res => {
-        console.log(res)
-    }) 
+    const store = useSelector((state) => state);
+    // TOOLS
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+ 
+    //STATE
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [remember, setRemember] = useState(false);
+ 
+
+    const handleSignIn = (e) => {
+       e.preventDefault();
+       dispatch(checkSignin(email, password, remember));
+    };
+ 
+    useEffect(() => {
+       if (store.currentState === 'logged') {
+          navigate('/dashboard');
+       }
+    });
+    if (store.loader) return <Loader />;
 
   return (
-    <main className="main bg-dark">
-        
-        <section className="sign-in-content">
+    <HelmetProvider>
+        <Helmet>
+        <title>Argent Bank - Sign In</title>
+        </Helmet>
+        <main className="main bg-dark">
+            
+            <section className="sign-in-content">
 
-            <h1>Sign In</h1>
-            <form>
-                <div className="input-wrapper">
-                    <label htmlFor="username">Username</label>
-                    <input type="text" id="username" />
-                </div>
-                <div className="input-wrapper">
-                    <label htmlFor="password">Password</label>
-                    <input type="password" id="password" />
-                </div>
-                <div className="input-remember">
-                    <label htmlFor="remember-me">Remember me</label>
-                    <input type="checkbox" id="remember-me" />
-                </div>
-                <button className="sign-in-button">Sign In</button>
-            </form>
-        </section>
-    </main>
+                <div>{element}</div>
+                <h1>Sign In</h1>
+
+                {store.error && (
+                    <span className="err-mes">Something wrong here</span>
+                )}
+
+                <form onSubmit={(e) => handleSignIn(e)}>
+                    <div className="input-wrapper">
+                        <label htmlFor="username">Username</label>
+                        <input
+                            type="text"
+                            id="username"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+                    </div>
+                    <div className="input-wrapper">
+                        <label htmlFor="password">Password</label>
+                        <input
+                            type="password"
+                            id="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                    </div>
+                    <div className="input-remember">
+                        <label htmlFor="remember-me">Remember me</label>
+                        <input
+                            type="checkbox"
+                            id="remember-me"
+                            onChange={(e) => setRemember(!remember)}
+                        />
+                    </div>
+                    <button className="sign-in-button">Sign In</button>
+                </form>
+            </section>
+        </main>
+    </HelmetProvider>
   );
 }
 
