@@ -4,13 +4,15 @@ import { useNavigate } from 'react-router-dom';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
-import { checkSignin } from '../redux/actions/actions';
+import { checkSignin, loginSuccess } from '../redux/actions/actions';
 
 // Components
 import Loader from '../components/Loader';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleUser } from '@fortawesome/free-solid-svg-icons'
+import { getToken } from '../utils/dataFetcher';
+import { LOGIN_SUCCESS } from '../redux/actions/type';
 
 const element = <FontAwesomeIcon icon={faCircleUser} />
 
@@ -29,12 +31,15 @@ function Signin() {
 
     const handleSignIn = (e) => {
        e.preventDefault();
-       dispatch(checkSignin(email, password, remember));
+       getToken(email, password).then(data => {
+        dispatch(loginSuccess(data))
+        console.log(data)
+       });
     };
  
     useEffect(() => {
        if (store.currentState === 'logged') {
-          navigate('/dashboard');
+          navigate('/user');
        }
     });
     if (store.loader) return <Loader />;
