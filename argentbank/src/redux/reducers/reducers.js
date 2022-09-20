@@ -1,13 +1,13 @@
  import { initialState } from '../store/store';
  import { clearStorage } from '../../utils/tokenStorage.js';
  import { setBearer } from '../../utils/dataFetcher.js';
-import { LOGIN_SUCCESS } from '../actions/type';
+import { LOGIN_SUCCESS, USER_PROFILE, LOADING_IN_PROGRESS, LOGIN_FAILED } from '../actions/type';
  
  
  export function usersReducer(state = initialState, action) {
     const { payload } = action;
     switch (action.type) {
-       case 'LOADING_IN_PROGRESS':
+       case LOADING_IN_PROGRESS:
           return {
              ...state,
              currentState: 'loading',
@@ -22,13 +22,13 @@ import { LOGIN_SUCCESS } from '../actions/type';
              currentState: 'logged',
              loader: true,
           };
-       case 'USER_PROFILE':
+       case USER_PROFILE:
           return {
              ...state,
              user: payload.user,
              loader: false,
           };
-       case 'LOGIN_FAILED':
+       case LOGIN_FAILED:
           return {
              ...state,
              error: true,

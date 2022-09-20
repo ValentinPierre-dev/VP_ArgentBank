@@ -1,7 +1,7 @@
 // React
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUserData, setUserData } from '../redux/actions/actions';
+import { getUserData } from '../redux/actions/actions';
 
 const UserProfil = () => {
    const store = useSelector((state) => state);

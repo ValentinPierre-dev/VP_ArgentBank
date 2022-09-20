@@ -1,6 +1,6 @@
-import { getToken, userData, userEdit } from '../../utils/dataFetcher.js';
+import { getToken, userData } from '../../utils/dataFetcher.js';
 import { saveLocal, clearStorage } from '../../utils/tokenStorage.js';
-import { LOGIN_SUCCESS } from './type.js';
+import { LOGIN_SUCCESS, LOADING_IN_PROGRESS, LOGIN_FAILED, USER_PROFILE, PROFILE_FAILED } from './type.js';
 
 
 
@@ -8,7 +8,7 @@ const checkSignin = (email, password) => {
    return async (dispatch) => {
       try {
          dispatch({
-            type: 'LOADING_IN_PROGRESS',
+            type: LOADING_IN_PROGRESS,
             payload: true,
          });
          const token = await getToken(email, password);
@@ -24,39 +24,30 @@ const checkSignin = (email, password) => {
          clearStorage();
          console.error(err);
          dispatch({
-            type: 'LOGIN_FAILED',
+            type: LOGIN_FAILED,
             payload: true,
          });
       }
    };
 };
 
-/**
- * Get informations of logged user
- * @returns { function }
- */
-
  const getUserData = () => {
    return async (dispatch) => {
       try {
          dispatch({
-            /** @type {actionsTypes} */
-            type: 'LOADING_IN_PROGRESS',
+            type: LOADING_IN_PROGRESS,
             payload: true,
          });
          // sent to axios
          const user = await userData();
-         userEdit(user.firstName, user.lastName);
          dispatch({
-            /** @type {actionsTypes} */
-            type: 'USER_PROFILE',
+            type: USER_PROFILE,
             payload: { user },
          });
       } catch (err) {
          console.log(err);
          dispatch({
-            /** @type {actionsTypes} */
-            type: 'PROFILE_FAILED',
+            type: PROFILE_FAILED,
          });
       }
    };

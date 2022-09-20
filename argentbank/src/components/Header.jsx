@@ -8,8 +8,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import logo from '../assets/argentBankLogo.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleUser } from '@fortawesome/free-solid-svg-icons'
+import { faSignOut } from '@fortawesome/free-solid-svg-icons'
 
-const element = <FontAwesomeIcon icon={faCircleUser} />
+const userIcon = <FontAwesomeIcon icon={faCircleUser} />
+const logOut = <FontAwesomeIcon icon={faSignOut} />
 
 function Header() {
 
@@ -18,21 +20,12 @@ function Header() {
   //TOOLS
   const dispatch = useDispatch();
 
-  /**
-   * If user exist : Fullname otherwise SignIn
-   * @param { object } user form store
-   * @param { string } firstName
-   * @param { string } lastName
-   */
   const title =
-     user !== null ? user.firstName + ' ' + user.lastName : 'SignIn';
+     user !== null ? user.firstName + ' ' + user.lastName : 'Sign in';
 
      console.log(user)
 
-  /**
-   * @function handleSignOut
-   * Logout the user then clear the localStorage
-   */
+
   const handleSignOut = () => {
      dispatch({ type: 'LOGOUT_ACTION' });
   };
@@ -49,23 +42,25 @@ function Header() {
             <h1 className="sr-only">Argent Bank</h1>
         </div>
       </Link>
-      <div>
+      <div className="main-nav-item">
         <Link to={store.loggedIn ? '/user' : '/signin'} className='no-underline'>
           <div className="main-nav-item">
-            <div>{element}</div>
+            <div>{userIcon}</div>
             <p>{title}</p>
           </div>
         </Link>
-        {store.loggedIn && (
+        {store.loggedIn ? (
           <Link
-            className="main-nav-item"
-            to="/"
+            className='no-underline logout'
+            to="/signin"
             onClick={() => handleSignOut()}
           >
-            <i className="fa fa-sign-out"></i>
-            &nbsp;Sign Out
+            <div className="main-nav-item">
+              <div>{logOut}</div>
+              <p>Logout</p>
+            </div>
           </Link>
-        )}
+        ) : (<div></div>)}
       </div>
     </nav>
   );

@@ -1,4 +1,6 @@
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import thunk from 'redux-thunk';
 import axios from 'axios';
 import { usersReducer } from '../reducers/reducers.js';
 
@@ -19,9 +21,11 @@ function setInitialState() {
    return { ...initialState, loggedIn: true, token };
 }
 
+const middleThunk = [thunk];
 const store = createStore(
    usersReducer,
    setInitialState(),
+   composeWithDevTools(applyMiddleware(...middleThunk))
 );
 
 export { store, initialState };
