@@ -1,4 +1,4 @@
-import { getToken, userData } from '../../utils/dataFetcher.js';
+import { getToken, userData, userEdit } from '../../utils/dataFetcher.js';
 import { saveLocal, clearStorage } from '../../utils/tokenStorage.js';
 import { LOGIN_SUCCESS, LOADING_IN_PROGRESS, LOGIN_FAILED, USER_PROFILE, PROFILE_FAILED } from './type.js';
 
@@ -53,6 +53,29 @@ const checkSignin = (email, password) => {
    };
 };
 
+const setUserData = (firstName, lastName) => {
+   return async (dispatch) => {
+      try {
+         // sent to axios
+         await userEdit(firstName, lastName);
+         dispatch({
+            /** @type {actionsTypes} */
+            type: 'SAVE_SUCCEED',
+            payload: {
+               user: { firstName, lastName },
+            },
+         });
+         
+      } catch (err) {
+         console.error(err);
+         dispatch({
+            /** @type {actionsTypes} */
+            type: 'SAVE_FAILED',
+         });
+      }
+   };
+};
+
 const loginSuccess = (payload) => {
    return {
       type: LOGIN_SUCCESS,
@@ -62,4 +85,4 @@ const loginSuccess = (payload) => {
 
 
 
-export { checkSignin, getUserData, loginSuccess };
+export { checkSignin, getUserData, loginSuccess, setUserData };

@@ -56,6 +56,12 @@ body{
   color: #42b983;
 }
 
+.main-nav-items {
+  display: flex;
+  align-items: center;
+  margin-right: 0.5rem;
+}
+
 .main-nav-item {
   display: flex;
   align-items: center;
@@ -409,4 +415,8 @@ body{
   text-align: left;
   padding: 5px 0 5px 10%;
   margin: 0 auto;
+}
+
+.account-button-link{
+  text-decoration: none;
 }

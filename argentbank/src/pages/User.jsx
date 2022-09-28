@@ -18,6 +18,7 @@ function User() {
         {ACCOUNT_DATAS.map((account) => (
             <BankAccount
               key={`${account.id}`}
+              linkPath={account.link}
               accountTitle={account.title}
               accountAmount={account.amount}
               accountAmountDescription={account.description}

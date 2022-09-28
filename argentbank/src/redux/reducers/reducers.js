@@ -35,9 +35,17 @@ import { LOGIN_SUCCESS, USER_PROFILE, LOADING_IN_PROGRESS, LOGIN_FAILED } from '
              loader: false,
              currentState: 'failed',
           };
-       case 'LOGOUT_ACTION':
+      case 'LOGOUT_ACTION':
           clearStorage();
           return initialState;
+      case 'SAVE_SUCCEED':
+         return {
+            ...state,
+            user: {
+               ...state.user,
+               ...action.payload.user
+            }
+         };
        default:
           return state;
     }

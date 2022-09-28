@@ -26,7 +26,7 @@ function Header() {
      console.log(user)
 
 
-  const handleSignOut = () => {
+  const handleLogOut = () => {
      dispatch({ type: 'LOGOUT_ACTION' });
   };
 
@@ -42,7 +42,7 @@ function Header() {
             <h1 className="sr-only">Argent Bank</h1>
         </div>
       </Link>
-      <div className="main-nav-item">
+      <div className="main-nav-items">
         <Link to={store.loggedIn ? '/user' : '/signin'} className='no-underline'>
           <div className="main-nav-item">
             <div>{userIcon}</div>
@@ -52,8 +52,8 @@ function Header() {
         {store.loggedIn ? (
           <Link
             className='no-underline logout'
-            to="/signin"
-            onClick={() => handleSignOut()}
+            to="/"
+            onClick={() => handleLogOut()}
           >
             <div className="main-nav-item">
               <div>{logOut}</div>
