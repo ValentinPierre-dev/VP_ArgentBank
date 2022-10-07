@@ -1,8 +1,25 @@
 import { getToken, userData, userEdit } from '../../utils/dataFetcher.js';
 import { saveLocal, clearStorage } from '../../utils/tokenStorage.js';
-import { LOGIN_SUCCESS, LOADING_IN_PROGRESS, LOGIN_FAILED, USER_PROFILE, PROFILE_FAILED } from './type.js';
+import { LOGIN_SUCCESS, LOADING_IN_PROGRESS, LOGIN_FAILED, USER_PROFILE, PROFILE_FAILED, SAVE_SUCCESS, SAVE_FAILED } from './type.js';
 
+/**
+ * @typedef {(
+ * 'LOADING_IN_PROGRESS'
+ * |'LOGIN_SUCEED'
+ * |'LOGIN_FAILED'
+ * |'USER_PROFILE'
+ * |'SAVE_SUCCEED'
+ * |'SAVE_FAILED'
+ * |'PROFILE_FAILED'
+ * )} actionsTypes
+ */
 
+/**
+ * Check if user exist
+ * @param { string } email
+ * @param { string } password
+ * @returns { function }
+ */
 
 const checkSignin = (email, password) => {
    return async (dispatch) => {
@@ -31,6 +48,10 @@ const checkSignin = (email, password) => {
    };
 };
 
+/**
+ * Get informations of logged user
+ * @returns { function }
+ */
  const getUserData = () => {
    return async (dispatch) => {
       try {
@@ -53,6 +74,13 @@ const checkSignin = (email, password) => {
    };
 };
 
+/**
+ * Update the user informations
+ * @param { string } firstName
+ * @param { string } lastName
+ * @returns { function }
+ */
+
 const setUserData = (firstName, lastName) => {
    return async (dispatch) => {
       try {
@@ -60,7 +88,7 @@ const setUserData = (firstName, lastName) => {
          await userEdit(firstName, lastName);
          dispatch({
             /** @type {actionsTypes} */
-            type: 'SAVE_SUCCEED',
+            type: SAVE_SUCCESS,
             payload: {
                user: { firstName, lastName },
             },
@@ -70,7 +98,7 @@ const setUserData = (firstName, lastName) => {
          console.error(err);
          dispatch({
             /** @type {actionsTypes} */
-            type: 'SAVE_FAILED',
+            type: SAVE_FAILED,
          });
       }
    };

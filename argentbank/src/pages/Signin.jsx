@@ -8,7 +8,7 @@ import { loginSuccess } from '../redux/actions/actions';
 import { saveLocal } from '../utils/tokenStorage';
 // Components
 import Loader from '../components/Loader';
-
+// Assets
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleUser } from '@fortawesome/free-solid-svg-icons'
 import { getToken } from '../utils/dataFetcher';
@@ -27,7 +27,14 @@ function Signin() {
     const [password, setPassword] = useState('');
     const [remember, setRemember] = useState(false);
  
-
+   /**
+    * Sign-in attempt
+    * @function handleSignIn - Click on SignIn button
+    * @param { object } e
+    * @param { string } email
+    * @param { string } password
+    * @param { boolean } remember //not used yet
+    */
     const handleSignIn = (e) => {
        e.preventDefault();
        getToken(email, password).then(data => {

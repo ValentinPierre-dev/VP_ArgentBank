@@ -1,4 +1,7 @@
+// React
 import { Helmet, HelmetProvider } from 'react-helmet-async';
+
+// Components
 import Hero from '../components/Hero';
 import Feature from '../components/Feature';
 import FEATURES_DATAS from '../datas/features-datas';

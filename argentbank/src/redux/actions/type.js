@@ -4,3 +4,6 @@ export const LOGIN_FAILED = 'LOGIN_FAILED'
 
 export const USER_PROFILE ='USER_PROFILE'
 export const PROFILE_FAILED = 'PROFILE_FAILED'
+
+export const SAVE_SUCCESS = 'SAVE_SUCCESS'
+export const SAVE_FAILED = 'SAVE_FAILED'

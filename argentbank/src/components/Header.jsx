@@ -20,11 +20,20 @@ function Header() {
   //TOOLS
   const dispatch = useDispatch();
 
+     /**
+    * If user exist : Fullname otherwise SignIn
+    * @param { object } user form store
+    * @param { string } firstName
+    * @param { string } lastName
+    */
+
   const title =
      user !== null ? user.firstName + ' ' + user.lastName : 'Sign in';
 
-     console.log(user)
-
+   /**
+    * @function handleSignOut
+    * Logout the user then clear the localStorage
+    */
 
   const handleLogOut = () => {
      dispatch({ type: 'LOGOUT_ACTION' });
@@ -49,7 +58,7 @@ function Header() {
             <p>{title}</p>
           </div>
         </Link>
-        {store.loggedIn ? (
+        {store.loggedIn &&  user !== null ? (
           <Link
             className='no-underline logout'
             to="/"

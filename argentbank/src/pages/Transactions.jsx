@@ -1,7 +1,7 @@
 // React
 import React from 'react';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
-
+// Components
 import TransactionsHeader from '../components/TransactionsHeader';
 import TransactionsLine from '../components/TransactionsLine';
 

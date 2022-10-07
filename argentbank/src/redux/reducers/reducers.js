@@ -1,8 +1,18 @@
  import { initialState } from '../store/store';
  import { clearStorage } from '../../utils/tokenStorage.js';
  import { setBearer } from '../../utils/dataFetcher.js';
-import { LOGIN_SUCCESS, USER_PROFILE, LOADING_IN_PROGRESS, LOGIN_FAILED } from '../actions/type';
+import { LOGIN_SUCCESS, USER_PROFILE, LOADING_IN_PROGRESS, LOGIN_FAILED, SAVE_SUCCESS } from '../actions/type';
  
+
+/**
+ *
+ * @param {Object} state
+ * @param {Object} action
+ * @param {Object} action.payload
+ * @param {actionsTypes} action.type
+ * @returns
+ */
+
  
  export function usersReducer(state = initialState, action) {
     const { payload } = action;
@@ -38,7 +48,7 @@ import { LOGIN_SUCCESS, USER_PROFILE, LOADING_IN_PROGRESS, LOGIN_FAILED } from '
       case 'LOGOUT_ACTION':
           clearStorage();
           return initialState;
-      case 'SAVE_SUCCEED':
+      case SAVE_SUCCESS:
          return {
             ...state,
             user: {

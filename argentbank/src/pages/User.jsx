@@ -1,7 +1,7 @@
 // React
 import React from 'react';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
-
+// Components
 import UserProfil from '../components/UserProfil';
 import BankAccount from '../components/BankAccount';
 import ACCOUNT_DATAS from '../datas/account-datas';
