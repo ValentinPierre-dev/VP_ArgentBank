@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
-import { loginSuccess } from '../redux/actions/actions';
+import { loginFailed, loading, loginSuccess } from '../redux/actions/actions';
 import { saveLocal } from '../utils/tokenStorage';
 // Components
 import Loader from '../components/Loader';
@@ -38,8 +38,15 @@ function Signin() {
     const handleSignIn = (e) => {
        e.preventDefault();
        getToken(email, password).then(data => {
-        dispatch(loginSuccess(data))
-        saveLocal(data, remember);
+        try {
+            dispatch(loading(data))
+            dispatch(loginSuccess(data))
+            saveLocal(data, remember);
+        }
+        catch (err){
+            console.log(err)
+            dispatch(loginFailed(data))
+        }
        });
     };
  

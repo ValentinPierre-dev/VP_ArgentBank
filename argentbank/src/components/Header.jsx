@@ -9,6 +9,7 @@ import logo from '../assets/argentBankLogo.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleUser } from '@fortawesome/free-solid-svg-icons'
 import { faSignOut } from '@fortawesome/free-solid-svg-icons'
+import { LOGOUT_ACTION } from '../redux/actions/type';
 
 const userIcon = <FontAwesomeIcon icon={faCircleUser} />
 const logOut = <FontAwesomeIcon icon={faSignOut} />
@@ -36,7 +37,7 @@ function Header() {
     */
 
   const handleLogOut = () => {
-     dispatch({ type: 'LOGOUT_ACTION' });
+     dispatch({ type: LOGOUT_ACTION });
   };
 
   return (

@@ -23,7 +23,7 @@ const userData = async () => {
 //Send the new informations updated
 
 const userEdit = async (firstName, lastName) => {
-   await axios.put('/profile', {
+   return await axios.put('/profile', {
       firstName,
       lastName,
    });

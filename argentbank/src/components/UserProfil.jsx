@@ -3,39 +3,53 @@ import React, { useEffect, useState } from 'react';
 
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
-import { getUserData, setUserData } from '../redux/actions/actions';
+import { loading, setUserFailed, setUserProfile, userFailed, userProfile } from '../redux/actions/actions';
+import { userData, userEdit } from '../utils/dataFetcher';
 
 const UserProfil = () => {
-   const store = useSelector((state) => state);
-   const user = store.user;
 
-   const firstName = useSelector((state) => state.user?.firstName);
-   const lastName = user && user.lastName;
+   const userFirstName = useSelector((state) => state.user?.firstName);
+   const userLastName = useSelector((state) => state.user?.lastName);
 
    const [edit, setEdit] = useState(false);
    const dispatch = useDispatch();
 
    useEffect(() => {
-      dispatch(getUserData());
+      userData().then(data => {
+         try{
+            dispatch(loading(data))
+            dispatch(userProfile(data))
+         }
+         catch (err){
+            console.log(err)
+            dispatch(userFailed(data))
+        }
+      });
    }, [dispatch]);
 
-    // OPEN MODALE
-    const openModale = () => {
+   // OPEN MODALE
+   const openModale = () => {
         setEdit(true);
      };
-     // CLOSE MODALE
-     const cancelEdit = () => {
+
+   // CLOSE MODALE
+   const cancelEdit = () => {
         setEdit(false);
      };
 
-    // SAVE EDITION
-    const onSave = (e) => {
+   // SAVE EDITION
+   const onSave = (e) => {
         e.preventDefault();
         const editFirstName = document.querySelector('#editFirstName').value;
         const editLastName = document.querySelector('#editLastName').value;
-        dispatch(setUserData(editFirstName, editLastName));
-        console.log(editFirstName + editLastName)
-        setEdit(false);
+
+        userEdit(editFirstName, editLastName).then(data => {
+         dispatch(setUserProfile(data.data.body))
+         setEdit(false)
+        }).catch((err) => {
+            alert(err)
+            dispatch(setUserFailed())
+        });
     };
 
 
@@ -46,8 +60,8 @@ const UserProfil = () => {
             <h1>
                 Welcome back
                 <br />
-                {firstName}&nbsp;
-                {lastName}
+                {userFirstName}&nbsp;
+                {userLastName}
             </h1>
             <button
                 className="edit-button"
@@ -64,12 +78,12 @@ const UserProfil = () => {
                <div>
                   <input
                      type="text"
-                     placeholder={firstName}
+                     placeholder={userFirstName}
                      id="editFirstName"
                   />
                   <input
                      type="text"
-                     placeholder={lastName}
+                     placeholder={userLastName}
                      id="editLastName"
                   />
                </div>

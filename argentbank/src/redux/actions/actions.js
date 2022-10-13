@@ -1,6 +1,12 @@
-import { getToken, userData, userEdit } from '../../utils/dataFetcher.js';
-import { saveLocal, clearStorage } from '../../utils/tokenStorage.js';
-import { LOGIN_SUCCESS, LOADING_IN_PROGRESS, LOGIN_FAILED, USER_PROFILE, PROFILE_FAILED, SAVE_SUCCESS, SAVE_FAILED } from './type.js';
+import {
+   LOGIN_SUCCESS,
+   LOADING_IN_PROGRESS,
+   LOGIN_FAILED,
+   USER_PROFILE,
+   PROFILE_FAILED,
+   SAVE_SUCCESS,
+   SAVE_FAILED
+} from './type.js';
 
 /**
  * @typedef {(
@@ -14,95 +20,17 @@ import { LOGIN_SUCCESS, LOADING_IN_PROGRESS, LOGIN_FAILED, USER_PROFILE, PROFILE
  * )} actionsTypes
  */
 
-/**
- * Check if user exist
- * @param { string } email
- * @param { string } password
- * @returns { function }
- */
 
-const checkSignin = (email, password) => {
-   return async (dispatch) => {
-      try {
-         dispatch({
-            type: LOADING_IN_PROGRESS,
-            payload: true,
-         });
-         const token = await getToken(email, password);
-         saveLocal(token);
+// LOADING ACTION
 
-         dispatch({
-            type: LOGIN_SUCCESS,
-            payload: { token },
-            loader: true,
-            error: false,
-         });
-      } catch (err) {
-         clearStorage();
-         console.error(err);
-         dispatch({
-            type: LOGIN_FAILED,
-            payload: true,
-         });
-      }
-   };
-};
+const loading = (payload) => {
+   return {
+      type: LOADING_IN_PROGRESS,
+      payload
+   }
+}
 
-/**
- * Get informations of logged user
- * @returns { function }
- */
- const getUserData = () => {
-   return async (dispatch) => {
-      try {
-         dispatch({
-            type: LOADING_IN_PROGRESS,
-            payload: true,
-         });
-         // sent to axios
-         const user = await userData();
-         dispatch({
-            type: USER_PROFILE,
-            payload: { user },
-         });
-      } catch (err) {
-         console.log(err);
-         dispatch({
-            type: PROFILE_FAILED,
-         });
-      }
-   };
-};
-
-/**
- * Update the user informations
- * @param { string } firstName
- * @param { string } lastName
- * @returns { function }
- */
-
-const setUserData = (firstName, lastName) => {
-   return async (dispatch) => {
-      try {
-         // sent to axios
-         await userEdit(firstName, lastName);
-         dispatch({
-            /** @type {actionsTypes} */
-            type: SAVE_SUCCESS,
-            payload: {
-               user: { firstName, lastName },
-            },
-         });
-         
-      } catch (err) {
-         console.error(err);
-         dispatch({
-            /** @type {actionsTypes} */
-            type: SAVE_FAILED,
-         });
-      }
-   };
-};
+// LOGIN ACTIONS
 
 const loginSuccess = (payload) => {
    return {
@@ -111,6 +39,43 @@ const loginSuccess = (payload) => {
    }
 }
 
+const loginFailed = (payload) => {
+   return {
+      type: LOGIN_FAILED,
+      payload
+   }
+}
 
 
-export { checkSignin, getUserData, loginSuccess, setUserData };
+// GET USER PROFILE ACTIONS
+
+const userProfile = (user) => {
+   return {
+      type: USER_PROFILE,
+      payload: { user }
+   }
+}
+
+const userFailed = () => {
+   return {
+      type: PROFILE_FAILED,
+   }
+}
+
+
+// EDIT USER ACTIONS
+
+const setUserProfile = (user) => {
+   return {
+      type: SAVE_SUCCESS,
+      payload: { user }
+   }
+}
+
+const setUserFailed = () => {
+   return {
+      type: SAVE_FAILED,
+   }
+}
+
+export { loading ,loginSuccess, loginFailed, userProfile, userFailed, setUserProfile, setUserFailed };

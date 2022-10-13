@@ -7,3 +7,5 @@ export const PROFILE_FAILED = 'PROFILE_FAILED'
 
 export const SAVE_SUCCESS = 'SAVE_SUCCESS'
 export const SAVE_FAILED = 'SAVE_FAILED'
+
+export const LOGOUT_ACTION = 'LOGOUT_ACTION'

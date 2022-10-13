@@ -1,7 +1,7 @@
  import { initialState } from '../store/store';
  import { clearStorage } from '../../utils/tokenStorage.js';
  import { setBearer } from '../../utils/dataFetcher.js';
-import { LOGIN_SUCCESS, USER_PROFILE, LOADING_IN_PROGRESS, LOGIN_FAILED, SAVE_SUCCESS } from '../actions/type';
+import { LOGIN_SUCCESS, USER_PROFILE, LOADING_IN_PROGRESS, LOGIN_FAILED, SAVE_SUCCESS, LOGOUT_ACTION } from '../actions/type';
  
 
 /**
@@ -35,7 +35,7 @@ import { LOGIN_SUCCESS, USER_PROFILE, LOADING_IN_PROGRESS, LOGIN_FAILED, SAVE_SU
        case USER_PROFILE:
           return {
              ...state,
-             user: payload.user,
+             user: action.payload.user,
              loader: false,
           };
        case LOGIN_FAILED:
@@ -45,9 +45,7 @@ import { LOGIN_SUCCESS, USER_PROFILE, LOADING_IN_PROGRESS, LOGIN_FAILED, SAVE_SU
              loader: false,
              currentState: 'failed',
           };
-      case 'LOGOUT_ACTION':
-          clearStorage();
-          return initialState;
+      
       case SAVE_SUCCESS:
          return {
             ...state,
@@ -56,6 +54,9 @@ import { LOGIN_SUCCESS, USER_PROFILE, LOADING_IN_PROGRESS, LOGIN_FAILED, SAVE_SU
                ...action.payload.user
             }
          };
+      case LOGOUT_ACTION:
+          clearStorage();
+          return initialState;
        default:
           return state;
     }
