@@ -3,7 +3,7 @@
 ![HTML](https://img.shields.io/badge/Language-HTML-orange)
 ![CSS](https://img.shields.io/badge/Language-CSS-purple)
 ![REACT](https://img.shields.io/badge/Framework-React-blue)
-![REDUX](https://img.shields.io/badge/Framework-Redux-blue)
+![REDUX](https://img.shields.io/badge/StateManagement-Redux-blue)
 ![JavaScript](https://img.shields.io/badge/Language-JS-yellow)
 
 ## About
